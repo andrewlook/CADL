@@ -56,7 +56,8 @@ def build_gif(imgs, interval=0.1, dpi=72,
         fig, axs, interval=interval*1000, repeat_delay=0, blit=True)
 
     if save_gif:
-        ani.save(saveto, writer='imagemagick', dpi=dpi)
+        im_writer = animation.ImageMagickFileWriter()
+        ani.save(saveto, writer=im_writer, dpi=dpi)
 
     if show_gif:
         plt.show()
