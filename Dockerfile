@@ -2,10 +2,13 @@ FROM continuumio/anaconda3
 
 RUN apt-get update && apt-get install -y \
         pkg-config \
-        libfreetype6-dev \
-        && \
-    apt-get clean && \
+        libfreetype6-dev
+
+RUN apt-get install -y dbus
+RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+
 
 ENV TENSORFLOW_VERSION 1.1.0
 RUN pip install tensorflow==$TENSORFLOW_VERSION 
@@ -17,6 +20,8 @@ COPY jupyter_notebook_config.py /root/.jupyter/
 # https://github.com/ipython/ipython/issues/7062
 # We just add a little wrapper script.
 COPY run_jupyter.sh /
+
+RUN apt-get update && apt-get install -y imagemagick
 
 # tensorboard
 EXPOSE 6006
